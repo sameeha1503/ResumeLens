@@ -1,6 +1,6 @@
 // Server-only AI helpers. Never imported by client code.
 import { createOpenAI } from "@ai-sdk/openai";
-import { streamText, embedMany, type ModelMessage } from "ai";
+import { generateText, embedMany, type ModelMessage } from "ai";
 import type { z } from "zod";
 
 function getProvider() {
@@ -33,13 +33,14 @@ function friendly(e: unknown): Error {
 export async function llmText(system: string, content: ModelMessage["content"]): Promise<string> {
   const provider = getProvider();
   try {
-    const result = streamText({
-      model: provider(getModel()),
+    const result = await generateText({
+      model: provider.chat(getModel()),
       system,
       messages: [{ role: "user", content } as ModelMessage],
     });
-    return await result.text;
+    return result.text;
   } catch (e) {
+    console.error("llmText error:", e);
     throw friendly(e);
   }
 }
