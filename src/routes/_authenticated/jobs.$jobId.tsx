@@ -151,7 +151,9 @@ function JobWorkspace() {
         <Tabs defaultValue="candidates" className="w-full">
           <TabsList className="bg-card border">
             <TabsTrigger value="candidates">Candidates</TabsTrigger>
+            <TabsTrigger value="analysis">Job Analysis</TabsTrigger>
             <TabsTrigger value="weights">Weights</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
           
           <TabsContent value="candidates" className="mt-6 space-y-6">
@@ -210,7 +212,7 @@ function JobWorkspace() {
                       <tr key={c.id} className="hover:bg-ink1 transition-colors">
                         <td className="p-4 font-bold">#{c.rank}</td>
                         <td className="p-4 font-semibold text-volt">
-                          <Link to="/jobs_/$jobId/candidates/$candidateId" params={{ jobId, candidateId: c.id }}>{displayName(c as any, job.blind_mode)}</Link>
+                          <Link to="/jobs/$jobId/candidates/$candidateId" params={{ jobId, candidateId: c.id }}>{displayName(c as any, job.blind_mode)}</Link>
                           {c.security_findings?.length > 0 && <ShieldAlert className="w-4 h-4 inline ml-2 text-flame" />}
                         </td>
                         <td className="p-4">
@@ -263,6 +265,18 @@ function JobWorkspace() {
                   </div>
                 ))}
               </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="analysis">
+            <div className="p-8 border border-ink3 border-dashed rounded-lg text-center text-mist2">
+              Job Analysis is coming in the next step.
+            </div>
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <div className="p-8 border border-ink3 border-dashed rounded-lg text-center text-mist2">
+              Job settings are coming in the next step.
             </div>
           </TabsContent>
         </Tabs>

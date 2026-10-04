@@ -9,6 +9,7 @@ import { extractJobRequirements, parseJdFile } from "@/lib/pipeline.functions";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/jobs")({
   head: () => ({ meta: [{ title: "Jobs — ResumeLens" }, { name: "description", content: "Your screening jobs." }, { property: "og:title", content: "Jobs — ResumeLens" }, { property: "og:description", content: "Your screening jobs." }] }),
@@ -46,6 +47,7 @@ function Jobs() {
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isCreating) return;
     if (!title.trim() || !description.trim()) {
       setError("Title and description are required.");
       return;
@@ -62,7 +64,12 @@ function Jobs() {
       
       if (insertErr || !job) throw new Error(insertErr?.message || "Failed to create job.");
 
-      await extractReqs({ data: { jobId: job.id } });
+      try {
+        await extractReqs({ data: { jobId: job.id } });
+      } catch (extErr: any) {
+        toast.warning("Job created, but requirements extraction failed: " + (extErr.message || "Unknown error"));
+      }
+
       await qc.invalidateQueries({ queryKey: ["jobs"] });
       
       setTitle("");

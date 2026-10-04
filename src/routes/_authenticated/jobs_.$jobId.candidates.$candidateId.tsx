@@ -31,7 +31,7 @@ function CandidateDetail() {
     return (
       <AppShell>
         <div className="p-8">
-          <Link to={`/jobs/${jobId}`} className="text-volt hover:underline flex items-center gap-2 mb-4">
+          <Link to="/jobs/$jobId" params={{ jobId }} className="text-volt hover:underline flex items-center gap-2 mb-4">
             <ArrowLeft className="w-4 h-4" /> Back to Workspace
           </Link>
           <div className="text-mist2">Candidate is processing or failed...</div>
@@ -70,7 +70,7 @@ function CandidateDetail() {
     <AppShell>
       <HeroBand 
         eyebrow={
-          <Link to={`/jobs/${jobId}`} className="text-volt hover:underline flex items-center gap-1">
+          <Link to="/jobs/$jobId" params={{ jobId }} className="text-volt hover:underline flex items-center gap-1">
             <ArrowLeft className="w-4 h-4" /> {job.title}
           </Link>
         } 
