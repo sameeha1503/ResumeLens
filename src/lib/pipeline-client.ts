@@ -47,15 +47,16 @@ export function usePipeline() {
         supabase.from("jobs").select("*").eq("id", jobId).single(),
       ]);
       if (cand && job) await persistScore(cand as unknown as CandidateRow, job as unknown as JobRow);
-    } catch (e) {
+    } catch (e: any) {
       console.error("pipeline step failed", e);
+      await supabase.from("candidates").update({ status: "failed", error: String(e.message || e) }).eq("id", candidateId);
     } finally {
       refresh();
     }
   }, [qc, parse, scan, extract, match]);
 
   /** Bounded-concurrency batch runner. */
-  const runMany = useCallback(async (ids: string[], jobId: string, from?: "match", concurrency = 3) => {
+  const runMany = useCallback(async (ids: string[], jobId: string, from?: "match", concurrency = 1) => {
     const queue = [...ids];
     await Promise.all(Array.from({ length: Math.min(concurrency, queue.length) }, async () => {
       while (queue.length) { const id = queue.shift()!; await run(id, jobId, from); }

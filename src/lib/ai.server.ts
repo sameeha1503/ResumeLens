@@ -32,17 +32,26 @@ function friendly(e: unknown): Error {
 /** Streams a Responses call and returns final text. */
 export async function llmText(system: string, content: ModelMessage["content"]): Promise<string> {
   const provider = getProvider();
-  try {
-    const result = await generateText({
-      model: provider.chat(getModel()),
-      system,
-      messages: [{ role: "user", content } as ModelMessage],
-    });
-    return result.text;
-  } catch (e) {
-    console.error("llmText error:", e);
-    throw friendly(e);
+  let lastErr: any;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const result = await generateText({
+        model: provider.chat(getModel()),
+        system,
+        messages: [{ role: "user", content } as ModelMessage],
+      });
+      return result.text;
+    } catch (e: any) {
+      lastErr = e;
+      console.error(`llmText error (attempt ${attempt + 1}):`, e, "Status:", e.statusCode, "Body:", e.responseBody, "Cause:", e.cause);
+      if (e.statusCode === 429 && attempt === 0) {
+        await new Promise(r => setTimeout(r, 2000));
+        continue;
+      }
+      throw friendly(e);
+    }
   }
+  throw friendly(lastErr);
 }
 
 function extractJson(t: string) {
@@ -77,8 +86,8 @@ export async function embed(texts: string[]): Promise<number[][] | null> {
       values: texts,
     });
     return embeddings;
-  } catch (e) {
-    console.error("embed error", e);
+  } catch (e: any) {
+    console.error("embed error:", e, "Status:", e.statusCode, "Body:", e.responseBody, "Cause:", e.cause);
     return null;
   }
 }

@@ -60,7 +60,18 @@ function JobWorkspace() {
 
     setIsUploading(true);
     try {
-      const ids = await uploadResumes(jobId, valid);
+      const { data: existing } = await supabase.from("candidates").select("file_name").eq("job_id", jobId);
+      const existingNames = new Set((existing || []).map(r => r.file_name));
+      const newFiles = valid.filter(f => !existingNames.has(f.name));
+      if (newFiles.length < valid.length) {
+        setUploadError(`Skipped ${valid.length - newFiles.length} file(s) that already exist.`);
+      }
+      if (!newFiles.length) {
+        setIsUploading(false);
+        return;
+      }
+
+      const ids = await uploadResumes(jobId, newFiles);
       qc.invalidateQueries({ queryKey: ["candidates", jobId] });
       await runMany(ids, jobId);
     } catch (err: any) {
@@ -184,7 +195,10 @@ function JobWorkspace() {
 
               {rankedData.processing.map(c => (
                 <div key={c.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-ink1 border rounded-lg">
-                  <div className="truncate font-semibold">{c.file_name}</div>
+                  <div className="truncate font-semibold">
+                    {c.file_name}
+                    {c.status === "failed" && c.error && <p className="text-xs text-flame mt-1 whitespace-normal break-words">{c.error}</p>}
+                  </div>
                   <div className="flex items-center gap-4 mt-2 sm:mt-0">
                     <span className={`text-xs px-2 py-1 rounded-full font-bold ${c.status === 'failed' ? 'bg-flame/10 text-flame' : 'bg-volt/10 text-volt'}`}>
                       {STATUS_LABEL[c.status] || c.status}
