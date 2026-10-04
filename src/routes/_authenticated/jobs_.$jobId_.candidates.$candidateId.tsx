@@ -6,7 +6,7 @@ import { DEFAULT_WEIGHTS } from "@/lib/types";
 import { ArrowLeft, ShieldAlert, AlertTriangle, CheckCircle2, AlertCircle, HelpCircle } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 
-export const Route = createFileRoute("/_authenticated/jobs_/$jobId/candidates/$candidateId")({
+export const Route = createFileRoute("/_authenticated/jobs_/$jobId_/candidates/$candidateId")({
   component: CandidateDetail,
 });
 

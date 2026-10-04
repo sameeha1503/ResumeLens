@@ -12,7 +12,7 @@ import { DEFAULT_WEIGHTS, Weights } from "@/lib/types";
 import { ShieldAlert, Shield, AlertTriangle, AlertCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/_authenticated/jobs/$jobId")({
+export const Route = createFileRoute("/_authenticated/jobs_/$jobId")({
   component: JobWorkspace,
 });
 
