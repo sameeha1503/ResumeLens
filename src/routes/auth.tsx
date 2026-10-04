@@ -46,10 +46,6 @@ function AuthPage() {
     } finally { setBusy(false); }
   };
 
-  const google = async () => {
-    const r = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin + "/auth" } });
-    if (r.error) toast.error(r.error.message ?? "Google sign-in failed");
-  };
 
   return (
     <div className="grid min-h-screen place-items-center bg-background px-4">
@@ -57,9 +53,7 @@ function AuthPage() {
         <div className="stripe pointer-events-none absolute -right-10 -top-8 h-24 w-56 -rotate-12 opacity-10" />
         <Logo />
         <h1 className="mt-6 font-display text-2xl font-extrabold">{mode === "in" ? "Sign in" : "Create account"}</h1>
-        <p className="mt-1 text-sm text-mist2">Rank by evidence, not keywords.</p>
-        <Button variant="outline" className="mt-6 w-full" onClick={google}>Continue with Google</Button>
-        <div className="eyebrow my-4 text-center">or</div>
+        <p className="mt-1 mb-6 text-sm text-mist2">Rank by evidence, not keywords.</p>
         <form onSubmit={submit} className="space-y-3">
           <Input type="email" required placeholder="you@company.com" value={email} onChange={(e) => setEmail(e.target.value)} />
           <Input type="password" required minLength={6} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
