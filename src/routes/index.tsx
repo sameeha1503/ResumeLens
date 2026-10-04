@@ -43,7 +43,7 @@ function Index() {
         </div>
         <div className="mt-6 overflow-hidden rounded-lg border">
           {rows.map(([r, n, s, rg, st, tone], i) => (
-            <div key={r} className={`grid grid-cols-[40px_1fr_60px_90px_auto] items-center gap-4 px-5 py-4 ${i === 0 ? "border-l-4 border-volt bg-volt/10" : "border-t"}`}>
+            <div key={r} className={`grid grid-cols-[40px_1fr_60px_90px_auto] items-center gap-4 py-4 pr-5 ${i === 0 ? "border-l-4 border-volt bg-volt/10 pl-4" : "border-t pl-5"}`}>
               <span className={`font-display text-lg font-extrabold ${i === 0 ? "text-volt" : "text-mist2"}`}>{r}</span>
               <span className="font-display font-bold">{n}</span>
               <span className="font-display text-lg font-extrabold">{s}</span>
