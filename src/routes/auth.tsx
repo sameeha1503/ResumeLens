@@ -49,7 +49,7 @@ function AuthPage() {
 
   return (
     <div className="grid min-h-screen place-items-center bg-background px-4">
-      <div className="relative w-full max-w-sm overflow-hidden rounded-lg border bg-ink2 p-8">
+      <div className="relative w-full max-w-sm overflow-hidden rounded-lg border bg-card shadow-sm p-8">
         <div className="stripe pointer-events-none absolute -right-10 -top-8 h-24 w-56 -rotate-12 opacity-10" />
         <Logo />
         <h1 className="mt-6 font-display text-2xl font-extrabold">{mode === "in" ? "Sign in" : "Create account"}</h1>

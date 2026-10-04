@@ -102,7 +102,7 @@ function JobWorkspace() {
       
       <div className="mt-6">
         <Tabs defaultValue="candidates" className="w-full">
-          <TabsList className="bg-ink2 border border-ink3">
+          <TabsList className="bg-card border">
             <TabsTrigger value="candidates">Candidates</TabsTrigger>
             <TabsTrigger value="analysis">Job Analysis</TabsTrigger>
             <TabsTrigger value="weights">Weights</TabsTrigger>
@@ -114,7 +114,7 @@ function JobWorkspace() {
               onDrop={handleDrop} 
               onDragOver={handleDragOver} 
               onDragLeave={handleDragLeave}
-              className={`p-10 border-2 border-dashed rounded-lg text-center transition-colors ${isDragging ? "border-volt bg-volt/10" : "border-ink3 bg-ink2"} ${isUploading ? "opacity-50 pointer-events-none" : ""}`}
+              className={`p-10 border-2 border-dashed rounded-lg text-center transition-colors ${isDragging ? "border-volt bg-volt/10" : "border-muted bg-card"} ${isUploading ? "opacity-50 pointer-events-none" : ""}`}
             >
               <h3 className="text-lg font-display font-bold">Drop Resumes Here</h3>
               <p className="text-sm text-mist2 mt-2">Supports PDF, DOCX, TXT, PNG, JPG (up to 5MB each)</p>
@@ -128,10 +128,10 @@ function JobWorkspace() {
               
               <div className="grid grid-cols-1 gap-3">
                 {candidates?.map(c => (
-                  <div key={c.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-ink2 border border-ink3 rounded-lg">
+                  <div key={c.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-card border rounded-lg">
                     <div className="truncate font-semibold">{c.file_name}</div>
                     <div className="flex items-center gap-4 mt-2 sm:mt-0">
-                      <span className={`text-xs px-2 py-1 rounded-full font-bold ${c.status === 'done' ? 'bg-green-900 text-green-300' : c.status === 'failed' ? 'bg-red-900 text-red-300' : 'bg-volt/20 text-volt'}`}>
+                      <span className={`text-xs px-2 py-1 rounded-full font-bold ${c.status === 'done' ? 'bg-mint/10 text-mint' : c.status === 'failed' ? 'bg-flame/10 text-flame' : 'bg-volt/10 text-volt'}`}>
                         {STATUS_LABEL[c.status] || c.status}
                       </span>
                       {c.status === "failed" && (

@@ -89,7 +89,7 @@ function Jobs() {
           )}
           <div className="space-y-2">
             {data?.map((j) => (
-              <Link key={j.id} to={`/_authenticated/jobs/${j.id}`} className="block border-l-4 border-volt bg-ink2 p-4 hover:bg-ink3 transition-colors">
+              <Link key={j.id} to={`/_authenticated/jobs/${j.id}`} className="block border-l-4 border-volt bg-card p-4 hover:bg-muted transition-colors">
                 <div className="font-display font-bold">{j.title}</div>
                 <div className="text-xs text-mist2">{j.candidates?.[0]?.count ?? 0} resumes</div>
               </Link>
@@ -97,10 +97,10 @@ function Jobs() {
           </div>
         </div>
 
-        <div className="bg-ink2 p-6 rounded-lg h-fit border border-ink3">
+        <div className="bg-card p-6 rounded-lg h-fit border">
           <h2 className="text-xl font-display font-bold mb-4">New Job</h2>
           <form onSubmit={handleCreate} className="space-y-4">
-            {error && <div className="p-3 bg-red-900/50 text-red-200 text-sm rounded border border-red-800">{error}</div>}
+            {error && <div className="p-3 bg-flame/10 text-flame text-sm rounded border border-flame/30">{error}</div>}
             
             <div className="space-y-2">
               <label className="text-sm font-semibold">Job Title</label>

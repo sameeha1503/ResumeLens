@@ -2,11 +2,8 @@
 @source "../src";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 /* ResumeLens design system — "kinetic athletic workspace".
- * Dark ink surfaces, volt accent, flame/amber/mint signal colours.
- * Light theme via .light on <html>. */
+ * Light theme default. */
 
 @theme inline {
   --font-display: "Bricolage Grotesque", ui-sans-serif, sans-serif;
@@ -62,38 +59,6 @@
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(0.16 0.01 265);
-  --foreground: oklch(0.95 0.008 260);
-  --ink2: oklch(0.2 0.013 265);
-  --ink3: oklch(0.245 0.018 265);
-  --card: oklch(0.2 0.013 265);
-  --card-foreground: oklch(0.95 0.008 260);
-  --popover: oklch(0.2 0.013 265);
-  --popover-foreground: oklch(0.95 0.008 260);
-  --volt: oklch(0.94 0.21 122);
-  --primary: oklch(0.94 0.21 122);
-  --primary-foreground: oklch(0.16 0.01 265);
-  --secondary: oklch(0.245 0.018 265);
-  --secondary-foreground: oklch(0.95 0.008 260);
-  --muted: oklch(0.245 0.018 265);
-  --muted-foreground: oklch(0.55 0.025 265);
-  --accent: oklch(0.245 0.018 265);
-  --accent-foreground: oklch(0.95 0.008 260);
-  --flame: oklch(0.68 0.21 35);
-  --destructive: oklch(0.68 0.21 35);
-  --destructive-foreground: oklch(0.98 0 0);
-  --amber: oklch(0.8 0.16 75);
-  --mint: oklch(0.82 0.15 165);
-  --mist: oklch(0.77 0.025 265);
-  --mist2: oklch(0.55 0.025 265);
-  --border: oklch(0.32 0.02 265);
-  --input: oklch(0.32 0.02 265);
-  --ring: oklch(0.94 0.21 122);
-  --highlight: oklch(0.94 0.21 122 / 0.28);
-  --stripe: repeating-linear-gradient(115deg, var(--volt) 0 13px, transparent 13px 26px);
-}
-
-.light {
   --background: oklch(0.975 0.004 260);
   --foreground: oklch(0.18 0.015 265);
   --ink2: oklch(1 0 0);
@@ -113,6 +78,7 @@
   --accent-foreground: oklch(0.18 0.015 265);
   --flame: oklch(0.58 0.2 35);
   --destructive: oklch(0.58 0.2 35);
+  --destructive-foreground: oklch(0.98 0 0);
   --amber: oklch(0.65 0.15 70);
   --mint: oklch(0.58 0.13 165);
   --mist: oklch(0.38 0.02 265);
@@ -121,6 +87,7 @@
   --input: oklch(0.89 0.01 260);
   --ring: oklch(0.62 0.17 128);
   --highlight: oklch(0.88 0.2 122 / 0.6);
+  --stripe: repeating-linear-gradient(115deg, var(--volt) 0 13px, transparent 13px 26px);
 }
 
 @layer base {
