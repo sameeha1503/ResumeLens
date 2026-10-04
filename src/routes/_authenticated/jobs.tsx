@@ -53,9 +53,10 @@ function Jobs() {
     setIsCreating(true);
     setError(null);
     try {
+      const { data: { user } } = await supabase.auth.getUser();
       const { data: job, error: insertErr } = await supabase
         .from("jobs")
-        .insert({ title, description })
+        .insert({ title, description, user_id: user?.id })
         .select("id")
         .single();
       
@@ -66,7 +67,7 @@ function Jobs() {
       
       setTitle("");
       setDescription("");
-      navigate({ to: `/_authenticated/jobs/${job.id}` });
+      navigate({ to: "/jobs/$jobId", params: { jobId: job.id } });
     } catch (err: any) {
       setError(err.message || "An error occurred creating the job.");
     } finally {
@@ -89,7 +90,7 @@ function Jobs() {
           )}
           <div className="space-y-2">
             {data?.map((j) => (
-              <Link key={j.id} to={`/_authenticated/jobs/${j.id}`} className="block border-l-4 border-volt bg-card p-4 hover:bg-muted transition-colors">
+              <Link key={j.id} to="/jobs/$jobId" params={{ jobId: j.id }} className="block border-l-4 border-volt bg-card p-4 hover:bg-muted transition-colors">
                 <div className="font-display font-bold">{j.title}</div>
                 <div className="text-xs text-mist2">{j.candidates?.[0]?.count ?? 0} resumes</div>
               </Link>

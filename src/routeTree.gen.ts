@@ -15,6 +15,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedJobsRouteImport } from './routes/_authenticated/jobs'
 import { Route as AuthenticatedJobsJobIdRouteImport } from './routes/_authenticated/jobs.$jobId'
+import { Route as AuthenticatedJobsJobIdCandidatesCandidateIdRouteImport } from './routes/_authenticated/jobs_.$jobId.candidates.$candidateId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -45,6 +46,12 @@ const AuthenticatedJobsJobIdRoute = AuthenticatedJobsJobIdRouteImport.update({
   path: '/$jobId',
   getParentRoute: () => AuthenticatedJobsRoute,
 } as any)
+const AuthenticatedJobsJobIdCandidatesCandidateIdRoute =
+  AuthenticatedJobsJobIdCandidatesCandidateIdRouteImport.update({
+    id: '/jobs_/$jobId/candidates/$candidateId',
+    path: '/jobs/$jobId/candidates/$candidateId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -52,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/jobs': typeof AuthenticatedJobsRouteWithChildren
   '/jobs/$jobId': typeof AuthenticatedJobsJobIdRoute
+  '/jobs/$jobId/candidates/$candidateId': typeof AuthenticatedJobsJobIdCandidatesCandidateIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -59,6 +67,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/jobs': typeof AuthenticatedJobsRouteWithChildren
   '/jobs/$jobId': typeof AuthenticatedJobsJobIdRoute
+  '/jobs/$jobId/candidates/$candidateId': typeof AuthenticatedJobsJobIdCandidatesCandidateIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,12 +77,25 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/jobs': typeof AuthenticatedJobsRouteWithChildren
   '/_authenticated/jobs/$jobId': typeof AuthenticatedJobsJobIdRoute
+  '/_authenticated/jobs_/$jobId/candidates/$candidateId': typeof AuthenticatedJobsJobIdCandidatesCandidateIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/auth' | '/jobs' | '/jobs/$jobId'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/jobs'
+    | '/jobs/$jobId'
+    | '/jobs/$jobId/candidates/$candidateId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/auth' | '/jobs' | '/jobs/$jobId'
+  to:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/jobs'
+    | '/jobs/$jobId'
+    | '/jobs/$jobId/candidates/$candidateId'
   id:
     | '__root__'
     | '/'
@@ -82,6 +104,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/jobs'
     | '/_authenticated/jobs/$jobId'
+    | '/_authenticated/jobs_/$jobId/candidates/$candidateId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -135,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedJobsJobIdRouteImport
       parentRoute: typeof AuthenticatedJobsRoute
     }
+    '/_authenticated/jobs_/$jobId/candidates/$candidateId': {
+      id: '/_authenticated/jobs_/$jobId/candidates/$candidateId'
+      path: '/jobs/$jobId/candidates/$candidateId'
+      fullPath: '/jobs/$jobId/candidates/$candidateId'
+      preLoaderRoute: typeof AuthenticatedJobsJobIdCandidatesCandidateIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -151,10 +181,13 @@ const AuthenticatedJobsRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedJobsRoute: typeof AuthenticatedJobsRouteWithChildren
+  AuthenticatedJobsJobIdCandidatesCandidateIdRoute: typeof AuthenticatedJobsJobIdCandidatesCandidateIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedJobsRoute: AuthenticatedJobsRouteWithChildren,
+  AuthenticatedJobsJobIdCandidatesCandidateIdRoute:
+    AuthenticatedJobsJobIdCandidatesCandidateIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
